@@ -44,6 +44,7 @@ export default function StatsCards() {
                 <Col xs={24} sm={12} md={12} lg={6} key={index}>
                     <Card
                         style={{
+                            background: "var(--ant-color-bg-container)",
                             borderRadius: 12,
                         }}
                     >

@@ -14,6 +14,21 @@ function AntWrapper({ children }: { children: React.ReactNode }) {
           theme === "dark"
             ? antdTheme.darkAlgorithm
             : antdTheme.defaultAlgorithm,
+
+        token: {
+          borderRadius: 10,
+          colorPrimary: "#1677ff",
+        },
+
+        components: {
+          Card: {
+            colorBgContainer: "var(--ant-color-bg-container)",
+          },
+          Layout: {
+            bodyBg: "var(--ant-color-bg-layout)",
+            headerBg: "var(--ant-color-bg-container)",
+          },
+        },
       }}
     >
       {children}

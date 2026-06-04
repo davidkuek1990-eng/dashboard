@@ -11,6 +11,7 @@ import {
     Form,
     message,
     Space,
+    Grid,
 } from "antd";
 
 import {
@@ -21,6 +22,8 @@ import {
 
 import initialUsers from "@/data/users.json";
 
+const { useBreakpoint } = Grid;
+
 export default function UsersTable() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -30,6 +33,9 @@ export default function UsersTable() {
     const [editingUser, setEditingUser] = useState<any>(null);
 
     const [form] = Form.useForm();
+
+    const screens = useBreakpoint();
+    const isMobile = !screens.md;
 
     useEffect(() => {
         fetchUsers()
@@ -171,9 +177,13 @@ export default function UsersTable() {
     return (
         <Card
             title="Users Management"
-            style={{ borderRadius: 12 }}
+            style={{ background: "var(--ant-color-bg-container)", borderRadius: 12 }}
             extra={
-                <div style={{ display: "flex", gap: 10 }}>
+                <div style={{
+                    display: "flex",
+                    gap: 10,
+                    flexDirection: isMobile ? "column" : "row",
+                }}>
                     <Input
                         placeholder="Search users..."
                         value={search}
@@ -195,7 +205,8 @@ export default function UsersTable() {
                 dataSource={filteredUsers}
                 columns={columns}
                 rowKey="id"
-                pagination={{ pageSize: 5 }}
+                scroll={{ x: 600 }}
+                pagination={{ pageSize: isMobile ? 3 : 5 }}
             />
 
             {/* ADD / EDIT MODAL */}

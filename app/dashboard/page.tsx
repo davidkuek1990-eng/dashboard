@@ -18,6 +18,7 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from "@ant-design/icons";
+import { Grid } from "antd";
 
 import ThemeToggle from '@/component/theme-toggle'
 import StatsCards from '@/component/state-cards'
@@ -25,6 +26,8 @@ import UsersLineChart from '@/component/users-line-chart'
 import UsersTable from '@/component/users-table'
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
+const { useBreakpoint } = Grid;
+
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -32,39 +35,32 @@ export default function DashboardPage() {
     const [user, setUser] = useState<any>(null);
     const [collapsed, setCollapsed] = useState(false);
 
+    const screens = useBreakpoint();
+    const isMobile = !screens.md;
+
     // AUTH CHECK
     useEffect(() => {
-        const data = localStorage.getItem("user");
+        const user = localStorage.getItem("user");
 
-        if (!data) {
+        if (!user) {
             router.push("/login");
-            return;
         }
-
-        setUser(JSON.parse(data));
-    }, [router]);
+    }, []);
 
     // LOGOUT
     const logout = () => {
         localStorage.removeItem("user");
-        message.success("Logged out");
         router.push("/login");
     };
-
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            {/* SIDEBAR */}
             <Sider
                 collapsible
-                collapsed={collapsed}
+                collapsed={isMobile ? true : collapsed}
                 trigger={null}
                 width={220}
-                collapsedWidth={80}
-                style={{
-                    transition: "all 0.2s ease",
-                }}
+                collapsedWidth={isMobile ? 0 : 80}
             >
-                {/* LOGO */}
                 <div
                     style={{
                         color: "white",
@@ -101,14 +97,14 @@ export default function DashboardPage() {
 
             {/* RIGHT SIDE LAYOUT */}
             <Layout style={{ minHeight: "100vh" }}>
-                {/* HEADER */}
                 <Header
                     style={{
-                        background: "#fff",
+                        background: "var(--ant-color-bg-container)",
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        padding: "0 16px",
+                        padding: isMobile ? "0 8px" : "0 16px",
+                        borderBottom: "1px solid var(--ant-color-border)",
                     }}
                 >
                     {/* LEFT HEADER */}
@@ -125,7 +121,10 @@ export default function DashboardPage() {
                             onClick={() => setCollapsed(!collapsed)}
                         />
 
-                        <Title level={4} style={{ margin: 0 }}>
+                        <Title level={isMobile ? 5 : 4} style={{
+                            margin: 0,
+                            color: "var(--ant-color-text)",
+                        }}>
                             Dashboard
                         </Title>
                     </div>
@@ -144,14 +143,13 @@ export default function DashboardPage() {
                     </div>
                 </Header>
 
-                {/* CONTENT (FIXED FULL WIDTH) */}
                 <Content
                     style={{
-                        margin: 16,
-                        padding: 24,
+                        margin: isMobile ? 8 : 16,
+                        padding: isMobile ? 12 : 24,
+                        background: "var(--ant-color-bg-layout)",
                         minHeight: "calc(100vh - 64px)",
-                        background: "#f5f5f5",
-                        overflow: "auto",
+                        overflowX: "auto",
                     }}
                 >
                     <StatsCards />

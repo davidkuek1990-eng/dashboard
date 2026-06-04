@@ -2,20 +2,24 @@
 
 import { Form, Input, Button, Card, Typography, message } from "antd";
 import { useRouter } from "next/navigation";
-import { login } from "@/lib/auth";
 
 const { Title } = Typography;
 
 export default function LoginForm() {
   const router = useRouter();
 
-  const onFinish = (values: any) => {
-    const user = login(values.email, values.password);
+  const onFinish = async (values: any) => {
+    const res = await fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
 
-    if (!user) {
+    if (!res.ok) {
       message.error("Invalid credentials");
       return;
     }
+
+    const user = await res.json();
 
     localStorage.setItem("user", JSON.stringify(user));
 
@@ -23,6 +27,8 @@ export default function LoginForm() {
 
     router.push("/dashboard");
   };
+
+
 
   return (
     <Card style={{ width: 380, margin: "auto" }}>
