@@ -46,11 +46,12 @@ export default function UsersTable() {
     };
 
     // FILTER
-    const filteredUsers = users.filter(
-        (user) =>
-            user.name.toLowerCase().includes(search.toLowerCase()) ||
-            user.email.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredUsers = (users || []).filter((user: any) => {
+        return (
+            user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+            user?.email?.toLowerCase().includes(search.toLowerCase())
+        );
+    });
 
     // OPEN ADD MODAL
     const openAddModal = () => {
