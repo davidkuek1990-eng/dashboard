@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Mon",
+        "users": 120
+    },
+    {
+        "name": "Tue",
+        "users": 200
+    },
+    {
+        "name": "Wed",
+        "users": 150
+    },
+    {
+        "name": "Thu",
+        "users": 300
+    },
+    {
+        "name": "Fri",
+        "users": 250
+    },
+    {
+        "name": "Sat",
+        "users": 400
+    },
+    {
+        "name": "Sun",
+        "users": 320
+    }
+]
