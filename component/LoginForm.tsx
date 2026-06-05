@@ -57,6 +57,8 @@ export default function LoginForm() {
           Login
         </Button>
       </Form>
+      test account email: test@test.com <br />
+      password: 123456
     </Card>
   );
 }

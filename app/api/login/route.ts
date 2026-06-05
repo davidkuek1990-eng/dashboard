@@ -4,7 +4,7 @@ export async function POST(req: Request) {
     const users = [
         {
             "id": 1,
-            "email": "davidkuek@test.com",
+            "email": "test@test.com",
             "password": "123456",
             "name": "Admin User",
             "role": "admin"
